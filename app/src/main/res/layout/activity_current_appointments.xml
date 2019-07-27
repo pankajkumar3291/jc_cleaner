@@ -1,0 +1,206 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/main_background">
+
+    <RelativeLayout
+        android:id="@+id/tool"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="#3374de"
+        android:padding="@dimen/_10sdp">
+
+
+        <ImageView
+            android:id="@+id/backarr"
+            android:layout_width="@dimen/_20sdp"
+            android:layout_height="@dimen/_20sdp"
+            android:src="@drawable/back_arrow" />
+
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:text="@string/current_appointments"
+            android:textColor="@color/white"
+            android:textSize="@dimen/_15ssp"
+            android:textStyle="bold" />
+
+
+    </RelativeLayout>
+
+
+    <de.hdodenhof.circleimageview.CircleImageView
+        android:id="@+id/profileImage"
+        android:layout_width="80dp"
+        android:layout_height="80dp"
+        android:layout_below="@+id/tool"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="@dimen/_15sdp"
+        android:src="@drawable/shahzeb"
+        android:visibility="visible"
+        app:civ_border_color="#fff"
+        app:civ_border_width="2dp" />
+
+
+    <TextView
+        android:id="@+id/tvUserName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/profileImage"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="@dimen/_5sdp"
+        android:text="Shahzeb"
+        android:textColor="#000"
+        android:textSize="@dimen/_15sdp"
+        android:textStyle="bold" />
+
+
+    <TextView
+        android:id="@+id/tvUserAddress"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/tvUserName"
+        android:layout_centerHorizontal="true"
+        android:text="Roopnagar Punjab"
+        android:textColor="#000"
+        android:textSize="@dimen/_12sdp"
+        android:textStyle="normal" />
+
+
+    <RelativeLayout
+        android:id="@+id/relativeBtns"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/tvUserAddress"
+        android:layout_marginTop="@dimen/_20sdp">
+
+
+        <TextView
+            android:id="@+id/tvDate"
+            android:layout_width="@dimen/_140sdp"
+            android:layout_height="@dimen/_40sdp"
+            android:layout_alignParentStart="true"
+            android:background="#FFCBF3AF"
+            android:drawableLeft="@drawable/drawable_left_green"
+            android:drawablePadding="@dimen/_5sdp"
+            android:gravity="center|left"
+            android:paddingLeft="@dimen/_20sdp"
+            android:text="21-11-2018"
+            android:textColor="#000"
+            android:textSize="@dimen/_12sdp" />
+
+        <!--android:drawableLeft="@drawable/date_img"-->
+
+
+        <TextView
+            android:id="@+id/tvTime"
+            android:layout_width="@dimen/_140sdp"
+            android:layout_height="@dimen/_40sdp"
+            android:layout_alignParentEnd="true"
+            android:background="#FFCBF3AF"
+            android:drawableLeft="@drawable/drawable_left_blue"
+            android:drawablePadding="@dimen/_5sdp"
+            android:gravity="center|left"
+            android:paddingLeft="@dimen/_20sdp"
+            android:text="6:30PM"
+            android:textColor="#000"
+            android:textSize="@dimen/_12sdp" />
+
+        <!--android:drawableStart="@drawable/time_img"-->
+
+    </RelativeLayout>
+
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/relativeBtns">
+
+
+        <LinearLayout
+            android:id="@+id/tet"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_20sdp"
+            android:gravity="center"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:id="@+id/imageCallToCleaner"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/check_in" />
+
+            <ImageView
+                android:id="@+id/imageMessageToCleaner"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/_25sdp"
+                android:src="@drawable/check_out" />
+
+        </LinearLayout>
+
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/tet"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="@dimen/_20sdp"
+            android:gravity="center"
+            android:orientation="horizontal">
+
+
+            <ImageView
+                android:id="@+id/imageCallSupport"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:src="@drawable/call_to_customer" />
+
+
+            <ImageView
+                android:id="@+id/imageEmailSupport"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginLeft="@dimen/_25sdp"
+                android:src="@drawable/text_to_customer" />
+
+
+        </LinearLayout>
+
+
+    </RelativeLayout>
+
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:gravity="center"
+        android:padding="@dimen/_10sdp">
+
+
+        <TextView
+            android:id="@+id/tvCancel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Cancel," />
+
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toRightOf="@+id/tvCancel"
+            android:text="2 hours before" />
+
+
+    </RelativeLayout>
+
+
+</RelativeLayout>

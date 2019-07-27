@@ -1,0 +1,39 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <group android:checkableBehavior="none">
+        <item
+            android:id="@+id/drawer_home"
+            android:checked="true"
+            android:title="Home" />
+
+        <item
+            android:id="@+id/drawer_address"
+            android:title="@string/drawer_address" />
+
+
+        <item
+            android:id="@+id/drawer_refer_a_friend"
+            android:title="@string/refer_a_friend" />
+
+
+        <item
+            android:id="@+id/invite_contact_support"
+            android:title="@string/contact_support" />
+
+
+        <item
+            android:id="@+id/payout"
+            android:title="@string/payout" />
+
+        <item
+            android:id="@+id/bio"
+            android:title="@string/bio" />
+
+
+        <item
+            android:id="@+id/shop"
+            android:title="@string/shop" />
+
+
+    </group>
+
+</menu>

@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/main_background">
+    <RelativeLayout
+        android:id="@+id/linearMainLogo"
+        android:layout_width="wrap_content"
+        android:layout_height="@dimen/_50sdp"
+        android:layout_marginLeft="@dimen/_20sdp"
+        android:layout_marginRight="@dimen/_20sdp"
+        android:layout_marginTop="@dimen/_100sdp">
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/splashlogo" />
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/relativeButtons"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:layout_marginLeft="@dimen/_10sdp"
+        android:layout_marginRight="@dimen/_10sdp"
+        android:gravity="center"
+        android:padding="@dimen/_10sdp">
+
+
+        <Button
+            android:id="@+id/btnLogin"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/_45sdp"
+            android:layout_marginTop="@dimen/_50sdp"
+            android:background="@drawable/login_background"
+            android:text="@string/login_btn"
+            android:textColor="#fff"
+            android:textSize="@dimen/_15ssp" />
+
+        <Button
+            android:id="@+id/btnRegister"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/_45sdp"
+            android:layout_below="@+id/btnLogin"
+            android:layout_marginTop="@dimen/_20sdp"
+            android:background="@drawable/register_background"
+            android:text="@string/sign_up_text"
+            android:textColor="#fff"
+            android:textSize="@dimen/_15ssp" />
+
+    </RelativeLayout>
+
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="@dimen/_10sdp"
+        android:layout_marginLeft="@dimen/_10sdp"
+        android:layout_marginRight="@dimen/_10sdp"
+        android:padding="@dimen/_5sdp">
+
+
+        <TextView
+
+            android:id="@+id/tvAboutUs"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="About us"
+            android:textAllCaps="true"
+            android:textColor="#FF4D6744"
+            android:textSize="@dimen/_12sdp"
+            android:textStyle="bold" />
+
+
+        <View
+            android:id="@+id/view"
+            android:layout_width="@dimen/_57sdp"
+            android:layout_height="2dp"
+            android:layout_below="@+id/tvAboutUs"
+            android:layout_centerHorizontal="true"
+            android:background="#FF4D6744" />
+
+
+    </RelativeLayout>
+
+
+</RelativeLayout>

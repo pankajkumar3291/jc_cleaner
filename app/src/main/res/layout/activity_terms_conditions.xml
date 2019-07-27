@@ -1,0 +1,232 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+
+    <RelativeLayout
+        android:id="@+id/tool"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="#3374de"
+        android:padding="@dimen/_10sdp">
+
+
+        <ImageView
+            android:id="@+id/backarr"
+            android:layout_width="@dimen/_20sdp"
+            android:layout_height="@dimen/_20sdp"
+            android:src="@drawable/back_arrow" />
+
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:text="@string/terms_conditions"
+            android:textColor="@color/white"
+            android:textSize="@dimen/_15ssp"
+            android:textStyle="bold" />
+
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/tool"
+        android:background="@drawable/main_background">
+
+
+        <RelativeLayout
+            android:id="@+id/relative"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:id="@+id/tvTermsAndConditions"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/_10ssp"
+                android:layout_marginRight="@dimen/_10ssp"
+                android:layout_marginTop="@dimen/_10ssp"
+                android:padding="@dimen/_5ssp"
+                android:text="Terms and Conditions"
+                android:textColor="#000"
+                android:textSize="@dimen/_14ssp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/tvDescription"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/_170sdp"
+                android:layout_below="@+id/tvTermsAndConditions"
+                android:layout_marginLeft="@dimen/_10ssp"
+                android:layout_marginRight="@dimen/_10ssp"
+                android:layout_marginTop="@dimen/_5ssp"
+                android:padding="@dimen/_5ssp"
+                android:scrollbars="vertical"
+                android:text="By using the Site web sites you agree to indemnify us and affiliated entities (collectively Indemnities) and hold them harmless from any and all claims and expenses, including (without limitation) attorney's fees, arising from your use of the Site web sites, your use of the Products and Services, or your submission of ideas and/or related materials to us or from any person's use of any ID, membership or password you maintain with any portion of the Site, regardless of whether such use is authorized by you."
+                android:textColor="#000"
+                android:textSize="@dimen/_12ssp" />
+        </RelativeLayout>
+
+
+        <View
+            android:id="@+id/view"
+            android:layout_width="match_parent"
+            android:layout_height="0.5dp"
+            android:layout_below="@+id/relative"
+            android:layout_marginTop="@dimen/_20ssp"
+            android:background="@color/black" />
+
+
+        <RelativeLayout
+            android:id="@+id/relativeCheckOne"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/view"
+            android:layout_marginTop="@dimen/_5ssp">
+
+            <CheckBox
+                android:id="@+id/checkBoxTwo"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:buttonTint="#FF3EA9F9"
+                android:text="" />
+
+            <TextView
+                android:id="@+id/tvCheckTwo"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_toRightOf="@+id/checkBoxTwo"
+                android:clickable="true"
+                android:text="@string/i_agree_to_all"
+                android:textColor="#FF3EA9F9"
+                android:textSize="@dimen/_12sdp" />
+
+        </RelativeLayout>
+
+
+        <RelativeLayout
+            android:id="@+id/relativeCheckTwo"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/relativeCheckOne"
+            android:layout_marginTop="@dimen/_5ssp"
+            android:orientation="horizontal">
+
+            <CheckBox
+                android:id="@+id/checkBoxOne"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:buttonTint="#FF3EA9F9"
+                android:text="" />
+
+            <TextView
+                android:id="@+id/tvCheckOne"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_toRightOf="@+id/checkBoxOne"
+                android:clickable="true"
+                android:text="@string/terms_and_conditions_and_special_terms"
+                android:textColor="#FF3EA9F9"
+                android:textSize="@dimen/_12sdp" />
+
+        </RelativeLayout>
+
+
+        <RelativeLayout
+            android:id="@+id/relativeCheckThree"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/relativeCheckTwo"
+            android:layout_marginTop="@dimen/_5ssp"
+            android:orientation="horizontal">
+
+            <CheckBox
+                android:id="@+id/checkBoxThree"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:buttonTint="#FF3EA9F9"
+                android:text="" />
+
+            <TextView
+                android:id="@+id/tvCheckThree"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_toRightOf="@+id/checkBoxThree"
+                android:clickable="true"
+                android:text="@string/data_combination_policy_i_wish_to_receive_all_cutomized_services"
+                android:textColor="#FF3EA9F9"
+                android:textSize="@dimen/_12sdp" />
+
+        </RelativeLayout>
+
+
+        <RelativeLayout
+            android:id="@+id/relativeCheckFour"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/relativeCheckThree"
+            android:layout_marginTop="@dimen/_5ssp"
+            android:orientation="horizontal">
+
+            <CheckBox
+                android:id="@+id/checkBoxFour"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:buttonTint="#FF3EA9F9"
+                android:text="" />
+
+            <TextView
+                android:id="@+id/tvCheckFour"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_toRightOf="@+id/checkBoxFour"
+                android:clickable="true"
+                android:text="@string/phone_number_verification_this_will_always_result_in_data"
+                android:textColor="#FF3EA9F9"
+                android:textSize="@dimen/_12sdp" />
+
+        </RelativeLayout>
+
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:background="#FF3EA9F9"
+            android:padding="@dimen/_10ssp">
+
+
+            <TextView
+                android:id="@+id/tvDecline"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:text="@string/decline"
+                android:textColor="@color/white"
+                android:textSize="@dimen/_16ssp" />
+
+
+            <TextView
+                android:id="@+id/tvAgree"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:text="@string/agree"
+                android:textColor="@color/white"
+                android:textSize="@dimen/_16ssp" />
+
+
+        </RelativeLayout>
+
+
+    </RelativeLayout>
+
+</RelativeLayout>

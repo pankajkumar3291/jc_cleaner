@@ -1,0 +1,198 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <RelativeLayout
+        android:id="@+id/tool"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="#3374de"
+        android:padding="@dimen/_10sdp">
+
+
+        <ImageView
+            android:id="@+id/backarr"
+            android:layout_width="@dimen/_20sdp"
+            android:layout_height="@dimen/_20sdp"
+            android:src="@drawable/back_arrow" />
+
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:text="RESET PASSWORD"
+            android:textColor="@color/white"
+            android:textSize="@dimen/_15ssp"
+            android:textStyle="bold" />
+
+
+    </RelativeLayout>
+
+
+    <RelativeLayout
+
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/tool"
+        android:background="@drawable/main_background">
+
+
+        <RelativeLayout
+            android:id="@+id/relativeSubMain"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_70sdp">
+
+            <TextView
+                android:id="@+id/tvVerifivation"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text="Verification code"
+                android:textColor="#FF4D6744"
+                android:textSize="@dimen/_20ssp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/tvVerifivation"
+                android:layout_marginTop="@dimen/_10ssp"
+                android:gravity="center"
+                android:text="Please type the verification code sent to registered email"
+                android:textColor="#FF4D6744"
+                android:textSize="@dimen/_15ssp"
+                android:textStyle="normal" />
+        </RelativeLayout>
+
+
+        <RelativeLayout
+            android:id="@+id/relativeEdittext"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/relativeSubMain"
+            android:layout_marginTop="@dimen/_30sdp"
+            android:gravity="center">
+
+            <EditText
+                android:id="@+id/ed1"
+                android:layout_width="@dimen/_35sdp"
+                android:layout_height="@dimen/_50sdp"
+                android:background="@drawable/rounded_edittext"
+                android:gravity="center"
+                android:imeOptions="actionNext"
+                android:inputType="number"
+                android:maxLength="1"
+                android:singleLine="true"
+                android:textColor="@color/black"
+                android:textColorHint="@color/black"
+                android:textCursorDrawable="@drawable/color_cursor" />
+
+
+            <EditText
+                android:id="@+id/ed2"
+                android:layout_width="@dimen/_35sdp"
+                android:layout_height="@dimen/_50sdp"
+                android:layout_marginLeft="@dimen/_5sdp"
+                android:layout_toRightOf="@+id/ed1"
+                android:background="@drawable/rounded_edittext"
+                android:gravity="center"
+                android:imeOptions="actionNext"
+                android:inputType="number"
+                android:maxLength="1"
+                android:singleLine="true"
+                android:textColor="@color/black"
+                android:textColorHint="@color/black"
+                android:textCursorDrawable="@drawable/color_cursor" />
+
+
+            <EditText
+                android:id="@+id/ed3"
+                android:layout_width="@dimen/_35sdp"
+                android:layout_height="@dimen/_50sdp"
+                android:layout_marginLeft="@dimen/_5sdp"
+                android:layout_toRightOf="@+id/ed2"
+                android:background="@drawable/rounded_edittext"
+                android:gravity="center"
+                android:imeOptions="actionNext"
+                android:inputType="number"
+                android:maxLength="1"
+                android:singleLine="true"
+                android:textColor="@color/black"
+                android:textColorHint="@color/black"
+                android:textCursorDrawable="@drawable/color_cursor" />
+
+            <!--android:imeOptions="actionNext"-->
+            <EditText
+
+                android:id="@+id/ed4"
+                android:layout_width="@dimen/_35sdp"
+                android:layout_height="@dimen/_50sdp"
+                android:layout_marginLeft="@dimen/_5sdp"
+                android:layout_toRightOf="@+id/ed3"
+                android:background="@drawable/rounded_edittext"
+                android:gravity="center"
+                android:inputType="number"
+                android:maxLength="1"
+                android:singleLine="true"
+                android:textColor="@color/black"
+                android:textColorHint="@color/black"
+                android:textCursorDrawable="@drawable/color_cursor" />
+
+
+        </RelativeLayout>
+
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:padding="@dimen/_20sdp">
+
+
+            <TextView
+                android:id="@+id/tvSend"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/_60sdp"
+                android:layout_marginRight="@dimen/_65sdp"
+                android:background="@drawable/resend_btn_bg"
+                android:gravity="center"
+                android:padding="@dimen/_10ssp"
+                android:text="Send"
+                android:textColor="@color/white"
+                android:textStyle="bold" />
+
+
+            <TextView
+                android:id="@+id/tvDidNotRcvOtp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/tvSend"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="@dimen/_30sdp"
+                android:gravity="center"
+                android:padding="@dimen/_5ssp"
+                android:text="Did not receive the OTP ?"
+                android:textColor="#FF4D6744" />
+
+
+            <TextView
+                android:id="@+id/tvResendOtp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/tvDidNotRcvOtp"
+                android:layout_centerHorizontal="true"
+                android:gravity="center"
+                android:text="Resend Code"
+                android:textColor="#FF4D6744" />
+
+
+        </RelativeLayout>
+
+
+    </RelativeLayout>
+
+</RelativeLayout>

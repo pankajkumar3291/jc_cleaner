@@ -1,0 +1,235 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginLeft="@dimen/_5sdp"
+    android:layout_marginRight="@dimen/_5sdp"
+    android:layout_marginTop="@dimen/_10sdp"
+    android:background="@drawable/open_apportunity_bg">
+    <TextView
+
+        android:id="@+id/tvServicesText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_marginLeft="@dimen/_10sdp"
+        android:gravity="center_horizontal"
+        android:padding="@dimen/_5sdp"
+        android:text="Dusting and Polishing"
+        android:textColor="#000"
+        android:textSize="@dimen/_14sdp"
+        android:textStyle="normal" />
+
+
+    <TextView
+        android:id="@+id/tvDistanceInKmText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:gravity="center_horizontal"
+        android:padding="@dimen/_5sdp"
+        android:text="05km"
+        android:textColor="#929292"
+        android:textSize="@dimen/_11sdp"
+        android:textStyle="normal"
+        android:visibility="gone" />
+
+
+    <LinearLayout
+
+        android:id="@+id/linear"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/tvServicesText"
+        android:orientation="horizontal"
+        android:padding="@dimen/_5sdp">
+
+
+        <ImageView
+            android:layout_gravity="center"
+            android:layout_marginTop="@dimen/_1sdp"
+            android:id="@+id/imgAddress"
+            android:layout_width="@dimen/_20sdp"
+            android:layout_height="@dimen/_20sdp"
+            android:src="@drawable/location_img_new" />
+
+        <TextView
+            android:id="@+id/tvLocationText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_2sdp"
+            android:text="Giani zail singh nagar, Roopnagar Punjab"
+            android:textColor="#000"
+            android:textSize="@dimen/_11sdp"
+            android:textStyle="normal" />
+
+
+    </LinearLayout>
+
+
+    <TextView
+
+        android:id="@+id/noDataAvailable"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_centerInParent="true"
+        android:layout_marginLeft="@dimen/_5sdp"
+        android:gravity="center"
+        android:text="NO JOBS AVAILABLE"
+        android:textColor="#000"
+        android:textSize="@dimen/_15sdp"
+        android:textStyle="normal"
+        android:visibility="gone" />
+
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/linear"
+        android:orientation="horizontal">
+
+
+        <LinearLayout
+            android:id="@+id/date_linear"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/linear"
+            android:orientation="horizontal"
+            android:padding="@dimen/_5sdp">
+
+
+            <ImageView
+                android:id="@+id/imgDate"
+                android:layout_width="@dimen/_20sdp"
+                android:layout_height="@dimen/_20sdp"
+                android:src="@drawable/date_img_new" />
+
+
+            <TextView
+                android:id="@+id/tvDate"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/_5sdp"
+                android:layout_marginTop="@dimen/_2sdp"
+                android:gravity="center"
+                android:text="21-11-2018"
+                android:textColor="#000"
+                android:textSize="@dimen/_11sdp"
+                android:textStyle="normal" />
+
+
+        </LinearLayout>
+
+
+        <LinearLayout
+            android:id="@+id/linear_new"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/date_linear"
+            android:orientation="horizontal"
+            android:padding="@dimen/_5sdp">
+
+
+            <ImageView
+                android:id="@+id/imgTime"
+                android:layout_width="@dimen/_20sdp"
+                android:layout_height="@dimen/_20sdp"
+                android:src="@drawable/time_img_new" />
+
+
+            <TextView
+                android:id="@+id/tvTime"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/_5sdp"
+                android:layout_marginTop="@dimen/_2sdp"
+                android:text="10:00 PM"
+                android:textColor="#000"
+                android:textSize="@dimen/_11sdp"
+                android:textStyle="normal" />
+
+        </LinearLayout>
+
+
+    </LinearLayout>
+
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_below="@+id/linear"
+        android:layout_marginRight="@dimen/_10sdp"
+        android:layout_marginTop="@dimen/_5sdp"
+        android:orientation="vertical"
+        android:visibility="gone">
+
+
+        <TextView
+            android:id="@+id/tvPersonalInfo"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="Personal Info"
+            android:textColor="#FF24A8E2"
+            android:textSize="@dimen/_12sdp"
+            android:textStyle="bold" />
+
+
+        <View
+            android:layout_width="@dimen/_75sdp"
+            android:layout_height="1dp"
+            android:layout_alignParentRight="true"
+            android:layout_below="@+id/tvPersonalInfo"
+            android:background="#FF24A8E2" />
+
+
+    </LinearLayout>
+
+
+    <android.support.constraint.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/linear"
+        android:layout_centerInParent="true"
+        android:layout_marginTop="@dimen/_50sdp">
+
+
+        <TextView
+            android:id="@+id/tvAccept"
+            android:layout_width="0dp"
+            android:layout_height="@dimen/_35sdp"
+            android:layout_alignParentLeft="true"
+            android:background="@drawable/no_btn_bg"
+            android:gravity="center"
+            android:text="Accept"
+            android:textColor="#fff"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toStartOf="@+id/tvDeny"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+
+        <TextView
+            android:id="@+id/tvDeny"
+            android:layout_width="0dp"
+            android:layout_height="@dimen/_35sdp"
+            android:layout_alignParentRight="true"
+            android:background="@drawable/yes_btn_bg"
+            android:gravity="center"
+            android:text="Deny"
+            android:textColor="#FFF"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toBottomOf="@+id/tvAccept"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toEndOf="@+id/tvAccept"
+            app:layout_constraintTop_toTopOf="@+id/tvAccept" />
+
+    </android.support.constraint.ConstraintLayout>
+
+
+</RelativeLayout>

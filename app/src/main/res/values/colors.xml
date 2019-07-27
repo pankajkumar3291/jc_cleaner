@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#3F51B5</color>
+    <color name="colorPrimaryDark">#2c2651</color>
+    <color name="colorAccent">#FF4081</color>
+
+
+    <color name="statusBarColor">#990e7ee7</color>
+    <color name="relativeBottomColor">#FF3EA9F9</color>
+    <color name="white">#FFFFFF</color>
+    <color name="black">#000000</color>
+
+    <color name="english_btnColor">#FF182391</color>
+    <color name="spanish_btnColor">#FFFDD433</color>
+
+    <color name="transparent">#00000000</color>
+    <color name="proDefaultColor">#FF4D6744</color>
+
+
+
+</resources>
