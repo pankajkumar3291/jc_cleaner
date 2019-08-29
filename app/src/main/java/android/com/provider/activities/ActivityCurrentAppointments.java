@@ -38,7 +38,6 @@ public class ActivityCurrentAppointments extends AppCompatActivity {
     private CircleImageView profileImage;
     private CompositeDisposable compositeDisposable = new CompositeDisposable();
     private ProgressDialog progressDialog;
-    private boolean isCheckIn=false;
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -86,9 +85,8 @@ public class ActivityCurrentAppointments extends AppCompatActivity {
                                 @Override
                                 public void accept(final ProviderCheckInRequest providerCheckInRequest) throws Exception {
                                     progressDialog.dismiss();
-                                    if (providerCheckInRequest != null) {
+                                    if (providerCheckInRequest != null){
                                         if (providerCheckInRequest.getIsSuccess()) {
-                                            isCheckIn=true;
                                             Toast.makeText(ActivityCurrentAppointments.this, providerCheckInRequest.getMessage(), Toast.LENGTH_SHORT).show();
                                         } else {
                                             Toast.makeText(ActivityCurrentAppointments.this, providerCheckInRequest.getMessage(), Toast.LENGTH_SHORT).show();
@@ -128,13 +126,12 @@ public class ActivityCurrentAppointments extends AppCompatActivity {
         Picasso.get().load(profilePic).into(profileImage);
         backarr.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View view) {
+            public void onClick(View view){
                 finish();
             }
         });
     }
-    private void callCheckOutApi() {
-//
+    private void callCheckOutApi(){
         SimpleDateFormat df = new SimpleDateFormat("dd/MM/yyyy");
         String date = df.format(Calendar.getInstance().getTime());
         SimpleDateFormat df1 = new SimpleDateFormat("HH:mm:ss");
@@ -143,18 +140,12 @@ public class ActivityCurrentAppointments extends AppCompatActivity {
             Date previousDate = df1.parse(tvTime.getText().toString());
             Date curentDate = df1.parse(time);
             if (curentDate.after(previousDate)) {
-               if (isCheckIn)
-               {
-                   progressDialog.setMessage("Wait");
+               progressDialog.setMessage("Wait");
                    progressDialog.setCancelable(false);
                    progressDialog.setIndeterminate(true);
                    progressDialog.show();
                    callCheckout();
-               }
-               else
-               {
-                   Toast.makeText(ActivityCurrentAppointments.this,"Please check in first",Toast.LENGTH_SHORT).show();
-               }
+
             } else {
                 Toast.makeText(ActivityCurrentAppointments.this, "Please check the appointment time ,the complete time must be greater than appointment start time", Toast.LENGTH_SHORT).show();
             }

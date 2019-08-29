@@ -21,6 +21,7 @@ import android.support.design.widget.TextInputLayout;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
+import android.util.Patterns;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -29,7 +30,6 @@ import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Spinner;
-import android.widget.SpinnerAdapter;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -39,6 +39,7 @@ import com.mobsandgeeks.saripaar.Validator;
 import com.mobsandgeeks.saripaar.annotation.Email;
 import com.mobsandgeeks.saripaar.annotation.NotEmpty;
 import com.mobsandgeeks.saripaar.annotation.Password;
+import com.mobsandgeeks.saripaar.annotation.Pattern;
 import com.orhanobut.hawk.Hawk;
 import com.sdsmdg.tastytoast.TastyToast;
 
@@ -50,23 +51,22 @@ import am.appwise.components.ni.NoInternetDialog;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.functions.Consumer;
+import okhttp3.RequestBody;
+import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 public class ActivitySignUp extends AppCompatActivity implements View.OnClickListener, Validator.ValidationListener {
     private ImageView backArrowImage;
-    @NotEmpty(message = "Please enter the name")
+    @NotEmpty(message = " Enter the name")
     public EditText edName;
-    @NotEmpty(message = "Please enter the address")
+    @NotEmpty(message = " Enter the address")
     public EditText edAddress;
-    @NotEmpty
+    @NotEmpty(message = "Enter phone number")
     public EditText edPhoneNumber;
-    @NotEmpty
-    @Email(message = "Please enter the valid email")
     public EditText edEmail;
-    @NotEmpty
-    @Password(message = "Please enter the valid password")
+    @NotEmpty(message = "Enter the Password")
     // , min = 6, scheme = Password.Scheme.ALPHA_NUMERIC_MIXED_CASE_SYMBOLS
     public EditText edPassword;
     @NotEmpty(message = "Please enter the city")
@@ -94,6 +94,8 @@ public class ActivitySignUp extends AppCompatActivity implements View.OnClickLis
     private TextView tvYes;
     private String selectedStateId = "";
     private String selectedCityId = "";
+    private List<Payload> getstateList = new ArrayList<>();
+    private List<Payload> getCityList = new ArrayList<>();
     private String mCountryHolder, mStateHolder, mCityHolder;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -109,7 +111,7 @@ public class ActivitySignUp extends AppCompatActivity implements View.OnClickLis
         spinnerOperationForState();
         spinnerOperationForService();
     }
-    private void spinnerOperationForService(){
+    private void spinnerOperationForService() {
         HttpModule.provideRepositoryService().getServiceListAPI().enqueue(new Callback<GetServiceList>() {
             @Override
             public void onResponse(Call<GetServiceList> call, Response<GetServiceList> response) {
@@ -173,14 +175,14 @@ public class ActivitySignUp extends AppCompatActivity implements View.OnClickLis
                                    if (getStateList.getIsSuccess()) {
                                        spinnerSetupGoesHere(getStateList.getPayload());
                                    } else {
-                                       TastyToast.makeText(ActivitySignUp.this, getStateList.getMessage(), TastyToast.LENGTH_SHORT, TastyToast.ERROR).show();
+                                       Toast.makeText(ActivitySignUp.this, getStateList.getMessage(), Toast.LENGTH_SHORT).show();
                                    }
                                }
                            }, new Consumer<Throwable>() {
                                @Override
                                public void accept(Throwable throwable) throws Exception {
                                    System.out.println("ActivitySignUp.accept " + throwable);
-                                   TastyToast.makeText(ActivitySignUp.this, String.valueOf(throwable), TastyToast.LENGTH_SHORT, TastyToast.ERROR).show();
+                                   Toast.makeText(ActivitySignUp.this, String.valueOf(throwable), Toast.LENGTH_SHORT).show();
                                    compositeDisposable.dispose();
                                }
                            }
@@ -196,8 +198,17 @@ public class ActivitySignUp extends AppCompatActivity implements View.OnClickLis
     private void spinnerSetupGoesHere(List<Payload> payload) {
 //        stateArraylist.add("Select State");
 ////        stateIdListPos.add("0");
-        Payload[] array = new Payload[payload.size()];
-        payload.toArray(array);
+        if (getstateList != null) {
+            if (getstateList.size() > 0)
+                getstateList.clear();
+        }
+        Payload payload1=new Payload();
+        payload1.setId(-000);
+        payload1.setName("Select State");
+        getstateList.add(payload1);
+        getstateList.addAll(payload);
+        Payload[] array = new Payload[getstateList.size()];
+        getstateList.toArray(array);
 //        String compareValue = spinnerState.getSelectedItem().toString();
         SpinAdapter spinAdapter = new SpinAdapter(ActivitySignUp.this, android.R.layout.simple_spinner_item, array);
         spinAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
@@ -205,18 +216,17 @@ public class ActivitySignUp extends AppCompatActivity implements View.OnClickLis
         spinnerState.setAdapter(spinAdapter);
         spinnerItemSelectionForState(spinAdapter);
     }
-    private void spinnerItemSelectionForState(final SpinAdapter spinAdapter) {
-        spinnerState.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+    private void spinnerItemSelectionForState(final SpinAdapter spinAdapter){
+        spinnerState.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener(){
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                Payload payload = spinAdapter.getItem(position);
-                selectedValueFromStateSpinnerIds = String.valueOf(payload.getId());
-                Hawk.put("SELECTED_SATATE", payload.getId());
-                spinnerOperationForCities(payload.getId());
+                selectedValueFromStateSpinnerIds = String.valueOf(getstateList.get(position).getId());
+                Hawk.put("SELECTED_SATATE", getstateList.get(position).getId());
+                spinnerOperationForCities(getstateList.get(position).getId());
             }
             @Override
             public void onNothingSelected(AdapterView<?> parent) {
-                TastyToast.makeText(ActivitySignUp.this, parent + "", TastyToast.LENGTH_SHORT, TastyToast.SUCCESS).show();
+                Toast.makeText(ActivitySignUp.this, parent + "", Toast.LENGTH_SHORT).show();
             }
         });
     }
@@ -230,7 +240,7 @@ public class ActivitySignUp extends AppCompatActivity implements View.OnClickLis
                         if (cityList != null && cityList.getIsSuccess()) {
                             spinnerSetupForCities(cityList.getPayload());
                         } else {
-//                            TastyToast.makeText(ActivitySignUp.this, cityList.getMessage(), TastyToast.LENGTH_SHORT, TastyToast.ERROR).show();
+                            TastyToast.makeText(ActivitySignUp.this, cityList.getMessage(), TastyToast.LENGTH_SHORT, TastyToast.ERROR).show();
                         }
                     }
                 }, new Consumer<Throwable>() {
@@ -242,8 +252,21 @@ public class ActivitySignUp extends AppCompatActivity implements View.OnClickLis
     }
     // todo               for spinner setup of cities
     private void spinnerSetupForCities(List<Payload> payload) {
-        Payload[] array = new Payload[payload.size()];
-        payload.toArray(array);
+
+
+        if (getCityList!=null)
+        {
+            if (getCityList.size()>0)
+                getCityList.clear();
+        }
+        Payload payload1=new Payload();
+        payload1.setId(-000);
+        payload1.setName("Select City");
+
+        getCityList.add(payload1);
+        getCityList.addAll(payload);
+        Payload[] array = new Payload[getCityList.size()];
+        getCityList.toArray(array);
 //        String compareValue = spinnerState.getSelectedItem().toString();
         SpinAdapter spinAdapter = new SpinAdapter(ActivitySignUp.this, android.R.layout.simple_spinner_item, array);
         spinAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
@@ -276,32 +299,47 @@ public class ActivitySignUp extends AppCompatActivity implements View.OnClickLis
                         if (zipCodeList != null && zipCodeList.getIsSuccess()) {
                             spinnerSetupForZipcode(zipCodeList);
                         } else {
+                            spinnerSetupForZipcode(null);
 //                            TastyToast.makeText(ActivitySignUp.this, zipCodeList.getMessage(), TastyToast.LENGTH_SHORT, TastyToast.ERROR).show();
                         }
                     }
                 }, new Consumer<Throwable>() {
                     @Override
-                    public void accept(Throwable throwable) throws Exception{
+                    public void accept(Throwable throwable) throws Exception {
                         System.out.println("ActivitySignUp.accept" + throwable.toString());
                         TastyToast.makeText(ActivitySignUp.this, throwable.toString(), TastyToast.LENGTH_SHORT, TastyToast.ERROR).show();
                     }
                 }));
     }
     //todo                      for spinner set up of zip code
-
     private void spinnerSetupForZipcode(ZipCodeList zipCodeList) {
         ArrayList<String> zipArrList = new ArrayList<>();
-//        zipArrList.add("Select zipcode");
-//        zipcodeIdListPos.add("0");
-        for (int y = 0; y < zipCodeList.getPayload().size(); y++) {
-            zipArrList.add(zipCodeList.getPayload().get(y).getZipcode());
-            zipcodeIdListPos.add(String.valueOf(zipCodeList.getPayload().get(y).getCityId()));
+        zipcodeIdListPos.clear();
+        zipArrList.add("Select zipcode");
+        zipcodeIdListPos.add("0");
+        if (zipCodeList!=null) {
+            for (int y = 0; y < zipCodeList.getPayload().size(); y++) {
+                zipArrList.add(zipCodeList.getPayload().get(y).getZipcode());
+                zipcodeIdListPos.add(String.valueOf(zipCodeList.getPayload().get(y).getId()));
+            }
         }
-        ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, zipArrList);
-        dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        spinnerZipCode.setDropDownWidth(1000);
-        spinnerZipCode.setAdapter(dataAdapter);
-        spinnerItemSelectionForZipCode();
+        else
+        {
+            zipArrList.clear();
+        }
+        if (zipArrList.size()!=0)
+        {
+            ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, zipArrList);
+            dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+            spinnerZipCode.setDropDownWidth(1000);
+            spinnerZipCode.setAdapter(dataAdapter);
+            dataAdapter.notifyDataSetChanged();
+            spinnerItemSelectionForZipCode();
+        }
+        else
+        {
+            spinnerZipCode.setAdapter(null);
+        }
     }
     //todo                         for zip code
     private void spinnerItemSelectionForZipCode() {
@@ -373,20 +411,37 @@ public class ActivitySignUp extends AppCompatActivity implements View.OnClickLis
     }
     @Override
     public void onValidationSucceeded() {
-        if (TextUtils.isEmpty(selectedValueFromStateSpinnerIds)) {
-            Toast.makeText(ActivitySignUp.this, "State field is required", Toast.LENGTH_SHORT).show();
-        } else if (TextUtils.isEmpty(selectedValuesFromCitySpinner)) {
-            Toast.makeText(ActivitySignUp.this, "City field is required", Toast.LENGTH_SHORT).show();
-        } else if (TextUtils.isEmpty(getSelectedValuesFromZipCodeSpinner)) {
-            Toast.makeText(ActivitySignUp.this, "Zip code field is required", Toast.LENGTH_SHORT).show();
-        } else if (spinnerServices.getSelectedItem() == null) {
-            Toast.makeText(ActivitySignUp.this, " Service field is required", Toast.LENGTH_SHORT).show();
-        } else if (spinnerServices.getSelectedItemPosition() == 0 || spinnerServices.getSelectedItem().toString().isEmpty()) {
-            Toast.makeText(ActivitySignUp.this, " Service field is required", Toast.LENGTH_SHORT).show();
-        } else {
-            loginProgressing();
-            callingSignUpApiHere();
+
+        if (edPassword.getText().toString().length()<8)
+        {
+            edPassword.setError("password must be min 8 character or digit");
         }
+        if (TextUtils.isEmpty(edEmail.getText().toString())) {
+            edEmail.setError("Enter the email");
+            return;
+        }
+        else if (!emailMetcher(edEmail.getText().toString()))
+        {
+            edEmail.setError("Enter valid email");
+        }
+        else if (TextUtils.isEmpty(selectedValueFromStateSpinnerIds)||spinnerState.getSelectedItemPosition()==0) {
+                Toast.makeText(ActivitySignUp.this, "State field is required", Toast.LENGTH_SHORT).show();
+            } else if (TextUtils.isEmpty(selectedValuesFromCitySpinner)||spinnerCity.getSelectedItemPosition()==0) {
+                Toast.makeText(ActivitySignUp.this, "City field is required", Toast.LENGTH_SHORT).show();
+            } else if (TextUtils.isEmpty(getSelectedValuesFromZipCodeSpinner)||spinnerZipCode.getSelectedItemPosition()==0) {
+                Toast.makeText(ActivitySignUp.this, "Zip code field is required", Toast.LENGTH_SHORT).show();
+            } else if (spinnerServices.getSelectedItem() == null) {
+                Toast.makeText(ActivitySignUp.this, " Service field is required", Toast.LENGTH_SHORT).show();
+            } else if (spinnerServices.getSelectedItemPosition() == 0 || spinnerServices.getSelectedItem().toString().isEmpty()) {
+                Toast.makeText(ActivitySignUp.this, " Service field is required", Toast.LENGTH_SHORT).show();
+            } else {
+                loginProgressing();
+                callingSignUpApiHere();
+            }
+        }
+    public boolean emailMetcher(String email)
+    {
+        return Patterns.EMAIL_ADDRESS.matcher(email).matches();
     }
     private void callingSignUpApiHere() {
         try {
@@ -505,11 +560,30 @@ public class ActivitySignUp extends AppCompatActivity implements View.OnClickLis
     public void onValidationFailed(List<ValidationError> errors) {
         mProgressDialog.dismiss();
 //        Toast.makeText(this, errors + "", Toast.LENGTH_LONG).show();
+
+        if (TextUtils.isEmpty(edEmail.getText().toString())) {
+            edEmail.setError("Enter the email");
+        }
+        else if (!emailMetcher(edEmail.getText().toString()))
+        {
+            edEmail.setError("Enter valid email");
+        }
+
+        if (edPassword.getText().toString().length()<8)
+        {
+            edPassword.setError("password must be min 8 character or digit");
+        }
         for (ValidationError error : errors) {
             View view = error.getView();
             String message = error.getCollatedErrorMessage(this);
             if (view instanceof EditText) {  // Display error messages
-                ((EditText) view).setError(message);
+
+                EditText etMessage=((EditText) view);
+               etMessage.setError(message);
+               etMessage.setFocusable(true);
+               etMessage.requestFocus();
+
+
             } else {
 //                Toast.makeText(ActivitySignUp.this, message, Toast.LENGTH_LONG).show();
             }

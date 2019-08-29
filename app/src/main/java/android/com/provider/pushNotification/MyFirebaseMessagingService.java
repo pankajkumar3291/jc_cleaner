@@ -23,9 +23,8 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.Random;
 import static android.com.provider.applicationUtils.App.listOfValues;
-
-
 // https://stackoverflow.com/questions/40181654/firebase-fcm-open-activity-and-pass-data-on-notification-click-android // MARK : SHAHZEB
+
 
 public class MyFirebaseMessagingService extends FirebaseMessagingService{
     @Override
@@ -33,50 +32,34 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService{
         super.onNewToken(s);
         System.out.println("MyFirebaseInstanceIDService.onTokenRefresh " + s);
     }
-
-
     @Override
-    public void onMessageReceived(RemoteMessage remoteMessage) {
-
+    public void onMessageReceived(RemoteMessage remoteMessage){
         Hawk.init(this).build();
-
         System.out.println("MyFirebaseMessagingService.onMessageReceived " + remoteMessage.getFrom());
-
         // Check if message contains a data payload.
-
-
         if (remoteMessage.getData().size() > 0) {
-
             listOfValues.add(new OpenApportunity(remoteMessage.getData().get("title"), remoteMessage.getData().get("Service"), remoteMessage.getData().get("address"), remoteMessage.getData().get("Date"), remoteMessage.getData().get("Time"), remoteMessage.getData().get("job_id"), remoteMessage.getData().get("customer_id")));
-            sendNotification(listOfValues);
+//            sendNotification(listOfValues);
             ((App) getApplicationContext()).getRxBus().send(new OpenApportunity(remoteMessage.getData().get("title"), remoteMessage.getData().get("Service"), remoteMessage.getData().get("address"), remoteMessage.getData().get("Date"), remoteMessage.getData().get("Time"), remoteMessage.getData().get("job_id"), remoteMessage.getData().get("customer_id")));
-
-
+            startInForeground(remoteMessage.getData());
         }
         // Check if message contains a notification payload.
         else if (remoteMessage.getNotification() != null){
-
         }
     }
-
     private void sendNotification(ArrayList<OpenApportunity> listOfValues) {
-
         Intent intent = new Intent(this, ActivityOpenApportunity.class);
         intent.putExtra("arraylist", listOfValues);
-
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         PendingIntent pendingIntent = PendingIntent.getActivity(this, 0 /* Request code */, intent,PendingIntent.FLAG_ONE_SHOT);
         String channelId = "idddd";
-
         // MARK : FETCHING NOTIFICATION ID
 //        long timenew = new Date().getTime();
 //        String tmpStr = String.valueOf(timenew);
 //        String last4Str = tmpStr.substring(tmpStr.length() - 5);
 //        int notificationId = Integer.valueOf(last4Str);
-
         Random random = new Random();
         int m = random.nextInt(9999 - 1000) + 1000;
-
         Uri defaultSoundUri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
         NotificationCompat.Builder notificationBuilder = new NotificationCompat.Builder(MyFirebaseMessagingService.this)
                 .setSmallIcon(R.drawable.notification_icon)
@@ -85,15 +68,11 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService{
                 .setAutoCancel(true)
                 .setSound(defaultSoundUri)
                 .setContentIntent(pendingIntent);
-
         NotificationManager notificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
         Objects.requireNonNull(notificationManager).notify(m /* ID of notification */, notificationBuilder.build());
     }
-
     private void sendNotification(String title, String service, String zipcode, String date, String time, String job_id, String customer_id) {
-
         Intent intent = new Intent(this, ActivityOpenApportunity.class).
-
                 putExtra("title", title).
                 putExtra("Service", service).
                 putExtra("address", zipcode).
@@ -101,22 +80,15 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService{
                 putExtra("Time", time).
                 putExtra("job_id", job_id).
                 putExtra("customer_id", customer_id);
-
-
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         PendingIntent pendingIntent = PendingIntent.getActivity(this, 0 /* Request code */, intent,
                 PendingIntent.FLAG_ONE_SHOT);
-
         String channelId = "idddd";
-
-
         // MARK : FETCHING NOTIFICATION ID
-
 //        long timenew = new Date().getTime();
 //        String tmpStr = String.valueOf(timenew);
 //        String last4Str = tmpStr.substring(tmpStr.length() - 5);
 //        int notificationId = Integer.valueOf(last4Str);
-
         Random random = new Random();
         int m = random.nextInt(9999 - 1000) + 1000;
 
@@ -128,37 +100,30 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService{
                 .setAutoCancel(true)
                 .setSound(defaultSoundUri)
                 .setContentIntent(pendingIntent);
-
         NotificationManager notificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
         Objects.requireNonNull(notificationManager).notify(m /* ID of notification */, notificationBuilder.build());
-
-
     }
-
-
-    private void startInForeground(Map<String, String> data) {
-
+    private void startInForeground(Map<String, String> data){
+        Intent intent = new Intent(this, ActivityOpenApportunity.class);
+        intent.putExtra("arraylist", listOfValues);
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         PendingIntent contentIntent = PendingIntent.getActivity(
                 getApplicationContext(),
                 0,
-                new Intent(), // add this
+               intent, // add this
                 PendingIntent.FLAG_UPDATE_CURRENT);
-
-
         // Intent notificationIntent = new Intent(this, WorkoutActivity.class);
         //PendingIntent pendingIntent=PendingIntent.getActivity(this,0,notificationIntent,0);
         NotificationCompat.Builder builder = new NotificationCompat.Builder(this, AppConstants.NOTIFICATION_CHANNEL_ID_CURRENT_LOCATION)
                 .setSmallIcon(R.drawable.notification_icon)
-                .setContentTitle(data.get("Provider"))
-                .setContentText(data.get("New Jobs"))
+                .setContentTitle(data.get("title"))
+                .setContentText(data.get("Service"))
+                .setAutoCancel(true)
                 .setPriority(Notification.PRIORITY_DEFAULT)
                 //.setContentText("HELLO")
                 //.setTicker("TICKER")
                 .setContentIntent(contentIntent);
-
         NotificationManager mNotificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
-
-
         if (Build.VERSION.SDK_INT >= 26) {
             NotificationChannel channel = new NotificationChannel(AppConstants.NOTIFICATION_CHANNEL_ID_CURRENT_LOCATION, AppConstants.NOTIFICATION_CHANNEL_NAME_CURRENT_LOCATION, NotificationManager.IMPORTANCE_DEFAULT);
             channel.setDescription(AppConstants.NOTIFICATION_CHANNEL_DESC_CURRENT_LOCATION);
@@ -166,8 +131,5 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService{
             notificationManager.createNotificationChannel(channel);
         }
         mNotificationManager.notify(1, builder.build());
-
     }
-
-
 }

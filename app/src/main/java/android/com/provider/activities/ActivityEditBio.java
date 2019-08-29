@@ -2,7 +2,6 @@ package android.com.provider.activities;
 import android.com.provider.apiResponses.UpdateBioServiceModel;
 import android.com.provider.apiResponses.getServiceTypeNames.Payload;
 import android.com.provider.apiResponses.getServiceTypeNames.ServiceTypeNames;
-import android.com.provider.apiResponses.providerFullDetails.ProviderFullDetails;
 import android.com.provider.httpRetrofit.HttpModule;
 import android.com.provider15_nov_2018.R;
 import android.content.Context;
@@ -11,7 +10,6 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
@@ -21,12 +19,9 @@ import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.TextView;
-
-
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
-
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.functions.Consumer;
@@ -37,7 +32,6 @@ public class ActivityEditBio extends AppCompatActivity {
     private List<String> sendSelectedlist=new ArrayList<>();
     private CompositeDisposable compositeDisposable = new CompositeDisposable();
     private Button btnokk;
-
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
@@ -45,28 +39,22 @@ public class ActivityEditBio extends AppCompatActivity {
         recjobtype = findViewById(R.id.recjobtypes);
         userService= (List<UpdateBioServiceModel>) getIntent().getSerializableExtra("type");
         callapi();
-
         findViewById(R.id.backarr).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                finish();
-            }
+                finish(); }
         });
-
         findViewById(R.id.button).setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v) {
+            public void onClick(View v){
                 userService.clear();
                 String selectedTypes;
-                for (Payload payload:serviceList) {
-                    if (payload.isSelected()) {
+                for (Payload payload:serviceList){
+                    if (payload.isSelected()){
                         sendSelectedlist.add(payload.getName());
                         UpdateBioServiceModel updateBioServiceModel= new UpdateBioServiceModel();
-
-                        userService.add(updateBioServiceModel.setId(payload.getId().toString()));
-                    }
+                        userService.add(updateBioServiceModel.setId(payload.getId().toString()));}
                 }
-
                 selectedTypes= TextUtils.join(",",sendSelectedlist);
                 Intent intent = new Intent();
                 intent.putExtra("serviceTypes", selectedTypes);
@@ -76,16 +64,15 @@ public class ActivityEditBio extends AppCompatActivity {
             }
         });
     }
-    private void callapi() {
+    private void callapi(){
         compositeDisposable.add(HttpModule.provideRepositoryService().serviceTypeNamesss("5").
                 subscribeOn(io.reactivex.schedulers.Schedulers.io()).
                 observeOn(AndroidSchedulers.mainThread()).
-                subscribe(new Consumer<ServiceTypeNames>() {
+                subscribe(new Consumer<ServiceTypeNames>(){
                     @Override
-                    public void accept(ServiceTypeNames serviceTypeNames) throws Exception {
+                    public void accept(ServiceTypeNames serviceTypeNames) throws Exception{
                         if (serviceTypeNames != null && serviceTypeNames.getIsSuccess()) {
                             if (serviceTypeNames.getPayload().size() > 0) {
-
                                 serviceList.addAll(serviceTypeNames.getPayload());
                                 if (userService.size()>0 && userService!=null)
                                 {
@@ -100,7 +87,9 @@ public class ActivityEditBio extends AppCompatActivity {
                                 }
                                 recjobtype.setAdapter(new ServiceTypeAdapter(ActivityEditBio.this, serviceList));
                             }
-                        } else {
+                        }
+                        else {
+
                         }
                     }
                 }, new Consumer<Throwable>() {
@@ -115,11 +104,6 @@ public class ActivityEditBio extends AppCompatActivity {
         super.onDestroy();
         compositeDisposable.dispose();
     }
-
-
-
-
-
     //*********************************** Adapter Class ******************************************
     class ServiceTypeAdapter extends RecyclerView.Adapter<ServiceTypeAdapter.ServiceTypeViewHolder> {
         private Context context;

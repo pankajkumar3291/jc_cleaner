@@ -404,12 +404,9 @@ public class ActivitySignIn extends AppCompatActivity implements View.OnClickLis
     }
 
     private void callTheDashboardActivity() {
-
-
         Intent intent1 = new Intent(ActivitySignIn.this, DashboardActivity.class);
         startActivity(intent1);
         finish();
-
     }
 
 

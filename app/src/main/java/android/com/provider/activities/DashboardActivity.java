@@ -108,7 +108,7 @@ public class DashboardActivity extends AppCompatActivity implements View.OnClick
                     public void accept(ProviderFullDetails providerFullDetails) throws Exception {
                         if (providerFullDetails != null && providerFullDetails.getIsSuccess()) {
                             Hawk.put("PROVIDER_NAME_DASHBOARD", providerFullDetails.getPayLoad().getUserDetails().getFirstName());
-//                            name.setText(providerFullDetails.getPayLoad().getUserDetails().getFirstName());
+                            name.setText(providerFullDetails.getPayLoad().getUserDetails().getFirstName());
                             email.setText(providerFullDetails.getPayLoad().getUserDetails().getEmail());
                             Hawk.put("serviceidn", providerFullDetails.getPayLoad().getUserDetails().getServices());
                             if (providerFullDetails.getPayLoad().getUserDetails().getWorking_status().equalsIgnoreCase("1")) {

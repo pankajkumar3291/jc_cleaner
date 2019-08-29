@@ -37,6 +37,7 @@ import android.com.provider.dto.sr.ServiceRequest;
 import io.reactivex.Observable;
 import okhttp3.MultipartBody;
 import okhttp3.RequestBody;
+import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.http.Body;
 import retrofit2.http.Field;
@@ -46,6 +47,7 @@ import retrofit2.http.Multipart;
 import retrofit2.http.POST;
 import retrofit2.http.Part;
 import retrofit2.http.Path;
+import retrofit2.http.Url;
 public interface RemoteRepositoryService {
 
 
@@ -91,6 +93,11 @@ public interface RemoteRepositoryService {
     @POST("provider/matchOTP")
     Observable<MatchOtp> getMatchOtpAPI(@Field("userId") String userId,
                                         @Field("otp") String otp);
+
+
+    //customer/CanceljobByCustomer
+
+
 
 
     // RESET PASSWORD API ---5
@@ -189,6 +196,9 @@ public interface RemoteRepositoryService {
     Observable<FAQ> getFAQAPI();
 
 
+    @GET
+    Call<ResponseBody> getUsersgithub(@Url String url);
+
     // ADDRESS AND PROFILE UPDATED   ------------19
 
 
@@ -217,10 +227,7 @@ public interface RemoteRepositoryService {
                                                               @Field("city") String city,
                                                               @Field("zipCode") String zipCode,
                                                               @Field("service") String service);
-
-
 // ACCEPT INSTANT BOOKING API ----------------20
-
     @FormUrlEncoded
     @POST("provider/acceptInstantJob")
     Observable<AcceptInstantBooking> acceptInstantBooking(@Field("job_id") String job_id,
@@ -231,33 +238,20 @@ public interface RemoteRepositoryService {
     @FormUrlEncoded
     @POST("provider/ListOfCurrentJobsForProvider/{locale}")
     Observable<CurrentJob> currentJob(@Path("locale") String soapString, @Field("provider_id") String provider_id);
-
-
     // CANCELLED JOB ---------22
-
     @FormUrlEncoded
     @POST("provider/ListOfCanceledJobsFromProvider/{locale}")
     Observable<CancelledJob> cancelledJob(@Path("locale") String language,  @Field("provider_id") String provider_id);
-
-
     // COMPLETED JOB-------23
-
     @FormUrlEncoded
     @POST("provider/ListOfCompletedJobsForProvider/{local}")
     Observable<CompletedJobs> completedJob(@Path("local") String language,@Field("provider_id") String provider_id);
-
-
     // CANCELLED JOB BY PROVIDER -----------24
-
-
     @FormUrlEncoded
     @POST("provider/CanceljobByProvider")
     Observable<CancelledJobByProvider> cancelledJobByProvider(@Field("job_id") String job_id,
                                                               @Field("provider_id") String provider_id);
-
-
     // PROVIDER FULL DETAILS-------------25
-
     @FormUrlEncoded
     @POST("provider/ProviderfullDetails")
     Observable<ProviderFullDetails> providerFullDetails(@Field("id") String id);
@@ -274,16 +268,12 @@ public interface RemoteRepositoryService {
     @POST("provider/provider_logout")
     Observable<ProviderLogoutRequest> logoutApi(@Field("id") int provider_id);
 
-
-
     @FormUrlEncoded
     @POST("provider/checkInForJob")
     Observable<ProviderCheckInRequest> checkInApi(@Field("Job_id") String Job_id,
                                                   @Field("provider_id") String provider_id,
                                                   @Field("date") String date,
                                                   @Field("time") String time);
-
-
 
     @FormUrlEncoded
     @POST("provider/checkOutFromJob")

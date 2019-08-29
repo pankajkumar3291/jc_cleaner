@@ -76,7 +76,7 @@ public class FragmentAddress extends Fragment implements View.OnClickListener {
     private AlertDialog.Builder alertDialogBuilder;
     private EditText edOldPass, edNewPassword, edPasswordConfirm;
     private TextView tvSave;
-    private TextView tvToastError,tvClose,tvToast,tvstates,tvcity,tvzipcode;
+    private TextView tvToastError, tvClose, tvToast, tvstates, tvcity, tvzipcode;
     private TextView tvYes;
     private CompositeDisposable compositeDisposable = new CompositeDisposable();
     private ProgressDialog mProgressDialog;
@@ -84,10 +84,10 @@ public class FragmentAddress extends Fragment implements View.OnClickListener {
     private ArrayList<String> listSpinnerCity = new ArrayList<>();
     private ArrayList<String> listSpinnerZipcode = new ArrayList<>();
     private ArrayList<String> listSpinnerServices = new ArrayList<>();
-    ArrayList<String> listForState;
-    ArrayList<String> listForServices;
-    ArrayList<String> listForCities;
-    ArrayList<String> listForZipcode;
+    private ArrayList<String> listForState;
+    private ArrayList<String> listForServices;
+    private ArrayList<String> listForCities;
+    private ArrayList<String> listForZipcode;
     private ArrayAdapter<String> dataAdapterForzipcodes;
     private ArrayAdapter<String> dataAdapterForCities;
     private ArrayAdapter<String> dataAdapterForStates;
@@ -99,7 +99,7 @@ public class FragmentAddress extends Fragment implements View.OnClickListener {
     private String cityID;
     private String zipcodeID;
     private String serviceID;
-    private boolean isStateSelected,isCitySelected,isZipCodeSelected;
+    private boolean isStateSelected, isCitySelected, isZipCodeSelected;
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -109,7 +109,7 @@ public class FragmentAddress extends Fragment implements View.OnClickListener {
         findingIdsHere(view);
         providerFullDetailsApiGoesHere();
         eventsListenerHere();
-        mProgressDialog = new ProgressDialog(getActivity(),R.style.AppTheme_Dark_Dialog);
+        mProgressDialog = new ProgressDialog(getActivity(), R.style.AppTheme_Dark_Dialog);
         return view;
     }
     private void providerFullDetailsApiGoesHere() {
@@ -144,7 +144,7 @@ public class FragmentAddress extends Fragment implements View.OnClickListener {
                             System.out.println("FragmentAddress.accept " + Objects.requireNonNull(providerFullDetails).getMessage());
                         }
                     }
-                }, new Consumer<Throwable>() {
+                }, new Consumer<Throwable>(){
                     @Override
                     public void accept(Throwable throwable) throws Exception {
                         System.out.println("FragmentAddress.accept " + throwable.toString());
@@ -493,6 +493,10 @@ public class FragmentAddress extends Fragment implements View.OnClickListener {
         });
     }
     private void changePasswordApiGoesHere() {
+        mProgressDialog.setMessage("Wait..");
+        mProgressDialog.setCancelable(false);
+        mProgressDialog.setIndeterminate(true);
+        mProgressDialog.show();
         compositeDisposable.add(HttpModule.provideRepositoryService().
                 getChangePaaswordAPI(String.valueOf(Hawk.get("savedUserId")), edOldPass.getText().toString(), edNewPassword.getText().toString()).
                 subscribeOn(io.reactivex.schedulers.Schedulers.computation()).
@@ -500,18 +504,19 @@ public class FragmentAddress extends Fragment implements View.OnClickListener {
                 subscribe(new Consumer<ChangePassword>() {
                     @Override
                     public void accept(ChangePassword changePassword) throws Exception {
+                        mProgressDialog.dismiss();
                         if (changePassword != null && changePassword.getIsSuccess()) {
-                            TastyToast.makeText(getActivity(), changePassword.getMessage(), TastyToast.LENGTH_SHORT, TastyToast.SUCCESS).show();
+                            Toast.makeText(getActivity(), changePassword.getMessage(), Toast.LENGTH_SHORT).show();
                             alertDialog.dismiss();
                         } else {
-                            TastyToast.makeText(getActivity(), Objects.requireNonNull(changePassword).getMessage(), TastyToast.LENGTH_SHORT, TastyToast.ERROR).show();
+                            Toast.makeText(getActivity(), Objects.requireNonNull(changePassword).getMessage(), Toast.LENGTH_SHORT).show();
                         }
                     }
                 }, new Consumer<Throwable>() {
                     @Override
                     public void accept(Throwable throwable) throws Exception {
+                        mProgressDialog.dismiss();
                         System.out.println("FragmentAddress.accept " + throwable.toString());
-                        TastyToast.makeText(getActivity(), throwable.toString(), TastyToast.LENGTH_SHORT, TastyToast.ERROR).show();
                     }
                 }));
     }
@@ -533,11 +538,7 @@ public class FragmentAddress extends Fragment implements View.OnClickListener {
     }
     private void updateWholeProfile() {
         if (edName.getText().toString().equalsIgnoreCase(name) && edPhoneNumber.getText().toString().
-                equalsIgnoreCase(phone_number) && edAddress.getText().toString().equalsIgnoreCase(address) &&
-                stateSpinner.getSelectedItem().toString().equalsIgnoreCase(state)
-                && spinnerCity.getSelectedItem().toString().equalsIgnoreCase(city) &&
-                spinnerZipcode.getSelectedItem().toString().equalsIgnoreCase(zipcode) &&
-                spinnerServices.getSelectedItem().toString().equalsIgnoreCase(service)) {
+                equalsIgnoreCase(phone_number) && edAddress.getText().toString().equalsIgnoreCase(address)) {
             TastyToast.makeText(getActivity(), "You have not updated anything new", TastyToast.LENGTH_SHORT, TastyToast.WARNING).show();
         } else {
             HttpModule.provideRepositoryService().addressProfileUpdated((String.valueOf(Hawk.get("savedUserId"))),
