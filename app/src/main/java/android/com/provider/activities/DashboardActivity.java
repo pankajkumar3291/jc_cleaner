@@ -473,7 +473,7 @@ public class DashboardActivity extends AppCompatActivity implements View.OnClick
             return;
         }
         this.doubleBackToExitPressedOnce = true;
-        TastyToast.makeText(DashboardActivity.this, "Please click back again to exit from the app", TastyToast.LENGTH_SHORT, TastyToast.WARNING).show();
+        Toast.makeText(DashboardActivity.this, "Please click back again to exit from the app", Toast.LENGTH_SHORT).show();
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {

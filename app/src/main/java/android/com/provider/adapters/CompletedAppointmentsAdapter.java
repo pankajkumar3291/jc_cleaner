@@ -62,7 +62,7 @@ public class CompletedAppointmentsAdapter extends RecyclerView.Adapter<Completed
         viewHolder.tvDate.setText(payload.getDate());
         viewHolder.tvTime.setText(payload.getTime());
 
-        Picasso.get().load(payload.getCustomerProfile()).resize(100,100).error(R.drawable.noimagenew).into(viewHolder.profileImage);
+        Picasso.get().load(payload.getCustomerProfile()).resize(100,100).error(R.drawable.no_image).into(viewHolder.profileImage);
 
 
         Drawable drawable = viewHolder.ratingBar.getProgressDrawable();

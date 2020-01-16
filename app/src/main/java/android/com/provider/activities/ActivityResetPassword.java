@@ -13,6 +13,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.mobsandgeeks.saripaar.ValidationError;
 import com.mobsandgeeks.saripaar.Validator;
@@ -180,9 +181,9 @@ public class ActivityResetPassword extends AppCompatActivity implements Validato
 
 
                         if (resetPassword != null && resetPassword.getIsSuccess()) {
-                            TastyToast.makeText(ActivityResetPassword.this, resetPassword.getMessage(), TastyToast.LENGTH_SHORT, TastyToast.SUCCESS).show();
+                            Toast.makeText(ActivityResetPassword.this, resetPassword.getMessage(), Toast.LENGTH_SHORT).show();
                         } else {
-                            TastyToast.makeText(ActivityResetPassword.this, resetPassword.getMessage(), TastyToast.LENGTH_SHORT, TastyToast.ERROR).show();
+                            Toast.makeText(ActivityResetPassword.this, resetPassword.getMessage(), Toast.LENGTH_SHORT).show();
                         }
 
 
@@ -195,7 +196,7 @@ public class ActivityResetPassword extends AppCompatActivity implements Validato
                     @Override
                     public void accept(Throwable throwable) throws Exception {
 
-                        TastyToast.makeText(ActivityResetPassword.this, throwable.toString(), TastyToast.LENGTH_SHORT, TastyToast.ERROR).show();
+                        Toast.makeText(ActivityResetPassword.this, throwable.toString(),Toast.LENGTH_SHORT).show();
 
                     }
 
@@ -209,6 +210,7 @@ public class ActivityResetPassword extends AppCompatActivity implements Validato
 
         Intent intent = new Intent(ActivityResetPassword.this, ActivitySignIn.class);
         startActivity(intent);
+        finish();
 
     }
 

@@ -39,7 +39,7 @@ public class ActivityCurrentAppointments extends AppCompatActivity {
     private CompositeDisposable compositeDisposable = new CompositeDisposable();
     private ProgressDialog progressDialog;
     @Override
-    protected void onCreate(@Nullable Bundle savedInstanceState) {
+    protected void onCreate(@Nullable Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_current_appointments);
         noInternetDialog = new NoInternetDialog.Builder(this).build();

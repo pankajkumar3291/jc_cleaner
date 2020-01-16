@@ -78,6 +78,7 @@ public class ActivityMain extends AppCompatActivity implements View.OnClickListe
             case R.id.btnLogin:
                 Intent intentBtnLogin = new Intent(ActivityMain.this, ActivitySignIn.class);
                 startActivity(intentBtnLogin);
+                finish();
 //                setupWindowAnimations();
 
                 break;

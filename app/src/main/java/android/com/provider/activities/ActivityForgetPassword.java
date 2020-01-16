@@ -42,20 +42,14 @@ public class ActivityForgetPassword extends AppCompatActivity implements View.On
     @NotEmpty
     @Email(message = "Please enter the valid email")
     private EditText edForgetPassword;
-
     private TextView btnSend;
     private ImageView backArrowImage;
     Validator validator;
     ProgressDialog mProgressDialog;
-
     private NoInternetDialog noInternetDialog;
-
-
     private CompositeDisposable compositeDisposable = new CompositeDisposable();
     private AlertDialog alertDialog;
     private AlertDialog.Builder alertDialogBuilder;
-
-
     private TextView tvToastError, tvClose, tvToast;
     private TextView tvYes;
 
@@ -67,7 +61,6 @@ public class ActivityForgetPassword extends AppCompatActivity implements View.On
 
 
         noInternetDialog = new NoInternetDialog.Builder(this).build();
-
 
         findingIdsHere();
         eventsListener();
@@ -129,22 +122,15 @@ public class ActivityForgetPassword extends AppCompatActivity implements View.On
 
     @Override
     public void onClick(View v) {
-
-
         switch (v.getId()) {
-
             case R.id.btnSend:
                 loginProgressing();
                 validator.validate();
-
                 break;
-
             case R.id.backArrowImage:
                 finish();
                 break;
-
         }
-
     }
 
     private void loginProgressing() {
@@ -159,60 +145,37 @@ public class ActivityForgetPassword extends AppCompatActivity implements View.On
 
     @Override
     public void onValidationSucceeded() {
-
         clearingTheEdittextHere();
         savingValuesInHawk();
         gettingValuesFromHawk();
-
-
         callTheForgetPasswordApiFromHere();
-
-
     }
-
     private void callTheForgetPasswordApiFromHere() {
-
-
         compositeDisposable.add(HttpModule.provideRepositoryService().
                 getForgetPasswordAPI(edForgetPassword.getText().toString()).
                 subscribeOn(io.reactivex.schedulers.Schedulers.computation()).
                 observeOn(AndroidSchedulers.mainThread()).
                 subscribe(new Consumer<ForgetPassword>() {
-
-
                     @Override
                     public void accept(ForgetPassword forgetPassword) throws Exception {
-
                         if (forgetPassword != null && forgetPassword.getIsSuccess()) {
-
                             mProgressDialog.dismiss();
-
+                            Hawk.put("savedUserId",forgetPassword.getPayLoad().getId());
                             Hawk.put("ED_FORGET_PASSWORD", edForgetPassword.getText().toString());
                             showTheDialogMessageForOk(forgetPassword.getMessage());
-
-
                         } else {
-
                             mProgressDialog.dismiss();
                             showTheDialogMessageForError(forgetPassword.getMessage());
                         }
-
                     }
-
                 }, new Consumer<Throwable>() {
-
                     @Override
                     public void accept(Throwable throwable) throws Exception {
-
                         System.out.println("ActivityForgetPassword.accept " + throwable.toString());
                         mProgressDialog.dismiss();
                         TastyToast.makeText(ActivityForgetPassword.this, throwable.toString(), TastyToast.LENGTH_SHORT, TastyToast.ERROR).show();
-
                     }
-
                 }));
-
-
     }
 
     private void showTheDialogMessageForError(String message) {
@@ -234,75 +197,52 @@ public class ActivityForgetPassword extends AppCompatActivity implements View.On
 
 
     }
-
-    private void findingIdsForError(View dialogView, String message) {
-
+    private void findingIdsForError(View dialogView, String message){
         tvToastError = dialogView.findViewById(R.id.tvToastError);
         tvClose = dialogView.findViewById(R.id.tvClose);
-
         tvToastError.setText(message);
-        tvClose.setOnClickListener(new View.OnClickListener() {
+        tvClose.setOnClickListener(new View.OnClickListener(){
             @Override
-            public void onClick(View view) {
-
+            public void onClick(View view){
                 alertDialog.dismiss();
             }
         });
-
     }
-
     private void showTheDialogMessageForOk(String message) {
-
         LayoutInflater li = LayoutInflater.from(this);
         View dialogView = li.inflate(R.layout.dialog_show_for_message_ok, null);
-
-
         findingDialogOkIds(dialogView, message);
-
-
         alertDialogBuilder = new AlertDialog.Builder(this);
         alertDialogBuilder.setView(dialogView);
-        alertDialogBuilder
-                .setCancelable(false);
+        alertDialogBuilder.setCancelable(false);
         alertDialog = alertDialogBuilder.create();
         Objects.requireNonNull(alertDialog.getWindow()).setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
         alertDialog.show();
-
-
     }
 
     private void findingDialogOkIds(View dialogView, String message) {
-
         tvToast = dialogView.findViewById(R.id.tvToast);
         tvYes = dialogView.findViewById(R.id.tvYes);
         tvYes.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View view) {
-
-
+            public void onClick(View view){
                 callOtpActivityFromHere();
                 alertDialog.dismiss();
             }
         });
         tvToast.setText(message);
-
     }
-
 
     private void callOtpActivityFromHere() {
 
         Intent intent = new Intent(this, ActivityOTP.class);
         startActivity(intent);
-
-
+        finish();
     }
 
     private void clearingTheEdittextHere() {
-
         edForgetPassword.setError(null);
-
     }
-
     private void gettingValuesFromHawk() {
         String edPassword = Hawk.get("ED_FORGET_PASSWORD");
     }

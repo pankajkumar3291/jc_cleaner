@@ -18,6 +18,7 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.orhanobut.hawk.Hawk;
 import com.sdsmdg.tastytoast.TastyToast;
@@ -35,13 +36,9 @@ public class ActivityOTP extends AppCompatActivity implements View.OnClickListen
 
     private EditText ed1, ed2, ed3, ed4;
     private TextView tvSend, tvResendOtp;
-
     private ImageView backarr;
-
     ProgressDialog mProgressDialog;
     private NoInternetDialog noInternetDialog;
-
-
     private CompositeDisposable compositeDisposable = new CompositeDisposable();
 
 
@@ -59,9 +56,7 @@ public class ActivityOTP extends AppCompatActivity implements View.OnClickListen
         eventListenerHere();
         changingFocusOfEdittextFromHere();
 
-
     }
-
     @Override
     protected void onDestroy() {
         super.onDestroy();
@@ -162,12 +157,10 @@ public class ActivityOTP extends AppCompatActivity implements View.OnClickListen
 
 
             }
-
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
 
             }
-
             @Override
             public void afterTextChanged(Editable s) {
 
@@ -177,15 +170,9 @@ public class ActivityOTP extends AppCompatActivity implements View.OnClickListen
                 } else {
                     ed3.requestFocus();
                 }
-
-
             }
         });
-
-
     }
-
-
 
     private void eventListenerHere() {
 
@@ -244,15 +231,10 @@ public class ActivityOTP extends AppCompatActivity implements View.OnClickListen
 
 
             case R.id.backarr:
-
                 finish();
                 break;
-
-
         }
-
     }
-
     private void loginProgressing() {
 
         mProgressDialog.setMessage("Waiting..");
@@ -262,7 +244,6 @@ public class ActivityOTP extends AppCompatActivity implements View.OnClickListen
         mProgressDialog.show();
 
     }
-
     private void resendOtpCode() {
 
         compositeDisposable.add(HttpModule.provideRepositoryService().
@@ -270,80 +251,58 @@ public class ActivityOTP extends AppCompatActivity implements View.OnClickListen
                 subscribeOn(io.reactivex.schedulers.Schedulers.computation()).
                 observeOn(AndroidSchedulers.mainThread()).
                 subscribe(new Consumer<ForgetPassword>() {
-
                     @Override
                     public void accept(ForgetPassword forgetPassword) throws Exception {
 
                         if (forgetPassword != null && forgetPassword.getIsSuccess()) {
-
                             mProgressDialog.dismiss();
                             TastyToast.makeText(ActivityOTP.this, "Sending you the code again", TastyToast.LENGTH_SHORT, TastyToast.SUCCESS).show();
                         } else {
-
                             TastyToast.makeText(ActivityOTP.this, "Not able to send the code again", TastyToast.LENGTH_SHORT, TastyToast.ERROR).show();
                         }
-
                     }
-
-
                 }, new Consumer<Throwable>() {
-
                     @Override
                     public void accept(Throwable throwable) throws Exception {
-
                         mProgressDialog.dismiss();
                         TastyToast.makeText(ActivityOTP.this, throwable.toString(), TastyToast.LENGTH_SHORT, TastyToast.ERROR).show();
-
                     }
                 }));
-
-
     }
 
     private void callingMatchOtpApiHere() {
-
+        mProgressDialog.setMessage("Waiting..");
+//        mProgressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+        mProgressDialog.setCancelable(false);
+        mProgressDialog.setIndeterminate(true);
+        mProgressDialog.show();
         compositeDisposable.add(HttpModule.provideRepositoryService().
                 getMatchOtpAPI(String.valueOf(Hawk.get("savedUserId")), ed1.getText().toString() + ed2.getText().toString() + ed3.getText().toString() + ed4.getText().toString()).
                 subscribeOn(io.reactivex.schedulers.Schedulers.computation()).
                 observeOn(AndroidSchedulers.mainThread()).
                 subscribe(new Consumer<MatchOtp>() {
-
                     @Override
                     public void accept(MatchOtp matchOtp) throws Exception {
-
+                        mProgressDialog.dismiss();
                         if (matchOtp != null && matchOtp.getIsSuccess()) {
-
-                            TastyToast.makeText(ActivityOTP.this, matchOtp.getMessage(), TastyToast.LENGTH_SHORT, TastyToast.SUCCESS).show();
+                            Hawk.delete("savedUserId");
+                            Toast.makeText(ActivityOTP.this, matchOtp.getMessage(),Toast.LENGTH_SHORT).show();
                             callResetPasswordActivityFromHere();
-
                         } else {
-
-                            TastyToast.makeText(ActivityOTP.this, Objects.requireNonNull(matchOtp).getMessage(), TastyToast.LENGTH_SHORT, TastyToast.ERROR).show();
+                            Toast.makeText(ActivityOTP.this, Objects.requireNonNull(matchOtp).getMessage(), Toast.LENGTH_SHORT).show();
                         }
-
                     }
-
-
                 }, new Consumer<Throwable>() {
-
                     @Override
                     public void accept(Throwable throwable) throws Exception {
-
-                        TastyToast.makeText(ActivityOTP.this, throwable.toString(), TastyToast.LENGTH_SHORT, TastyToast.ERROR).show();
-
+                        mProgressDialog.dismiss();
+                        Toast.makeText(ActivityOTP.this, throwable.toString(),Toast.LENGTH_SHORT).show();
                     }
                 }));
-
-
     }
-
     private void callResetPasswordActivityFromHere() {
-
         Intent intent = new Intent(ActivityOTP.this, ActivityResetPassword.class);
         startActivity(intent);
-
-
+        finish();
     }
-
-
 }

@@ -63,7 +63,7 @@ public class CurrentAppointmentsListAdapter extends RecyclerView.Adapter<Current
         viewHolder.tvAddress.setText(payload.getCustomerAddress());
         viewHolder.tvDate.setText(payload.getDate());
         viewHolder.tvTime.setText(payload.getTime());
-        Picasso.get().load(payload.getCustomerProfile()).resize(100, 100).error(R.drawable.noimagenew).into(viewHolder.profileImage);
+        Picasso.get().load(payload.getCustomerProfile()).resize(100, 100).error(R.drawable.no_image).into(viewHolder.profileImage);
         jobId = payload.getJobId().toString();
         viewHolder.cancel_layout.setOnClickListener(new View.OnClickListener() {
             @Override

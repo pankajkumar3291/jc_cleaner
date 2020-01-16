@@ -25,7 +25,7 @@ public class HttpModule{
         return new Retrofit.Builder()
                 //http://192.168.0.42
                 //http://192.168.0.79/jc2019/cleaning_service/public/
-                .baseUrl("http://192.168.0.79/jc2019/cleaning_service/public/api/")
+                .baseUrl("http://smartit.ventures/CS/cleaning_service/public/api/")
                 .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
                 .addConverterFactory(GsonConverterFactory.create(new GsonBuilder().setLenient().create()))
                 .client(getOkkHttpClient())

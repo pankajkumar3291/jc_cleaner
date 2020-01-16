@@ -67,7 +67,7 @@ public class CancelAppointmentsAdapter extends RecyclerView.Adapter<CancelAppoin
         holder.tvDate.setText(payload.getDate());
         holder.tvTime.setText(payload.getTime());
 
-        Picasso.get().load(payload.getCustomerProfile()).resize(100,100).error(R.drawable.noimagenew).into(holder.profileImage);
+        Picasso.get().load(payload.getCustomerProfile()).resize(100,100).error(R.drawable.no_image).into(holder.profileImage);
 
 
 //        holder.restore_layout.setOnClickListener(new View.OnClickListener() {

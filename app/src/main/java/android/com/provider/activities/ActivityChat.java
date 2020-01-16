@@ -98,8 +98,6 @@ public class ActivityChat extends AppCompatActivity {
         }
     }
 
-
-
     //todo                       chatAdapter
     class ChatAdapter extends RecyclerView.Adapter<ChatAdapter.ChatViewHolder> {
         private List<FirebaseMessage> chatAdapterList;

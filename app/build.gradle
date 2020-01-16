@@ -64,6 +64,7 @@ dependencies {
     implementation 'com.google.firebase:firebase-auth:16.1.0'
     implementation 'com.google.firebase:firebase-messaging:17.3.4'
     implementation 'com.borjabravo:readmoretextview:2.1.0'
+    implementation 'testfairy:testfairy-android-sdk:1.+@aar'
 }
 apply plugin: 'com.google.gms.google-services'  // MARK: FOR FIREBASE FCM
 

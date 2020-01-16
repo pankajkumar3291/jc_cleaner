@@ -95,6 +95,7 @@ public class ActivitySelectLanguages extends AppCompatActivity implements View.O
 
                 Intent intentEnglish = new Intent(ActivitySelectLanguages.this, ActivityMain.class);
                 startActivity(intentEnglish);
+                finish();
                 break;
 
 
@@ -103,6 +104,7 @@ public class ActivitySelectLanguages extends AppCompatActivity implements View.O
                 LocaleHelper.setLocale(this,"es");
                 Intent intentSpanish = new Intent(ActivitySelectLanguages.this, ActivityMain.class);
                 startActivity(intentSpanish);
+                finish();
 
 
                 break;
